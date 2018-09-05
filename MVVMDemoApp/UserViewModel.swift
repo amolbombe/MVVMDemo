@@ -15,11 +15,7 @@ import Foundation
 class UserViewModel {
     private var minUsernameLength = 8
     private var minPasswordLength = 6
-    private var user = User() {
-        didSet {
-            username.value = user.username
-        }
-    }
+    private var user = User()
     
     var username: Box<String> = Box(value: "")//String {
 //        return user.username
@@ -34,7 +30,8 @@ extension UserViewModel {
     
     func updateUsername(username: String) {
         user.username = username
-        print(username)
+        self.username.value = username
+        print("update \(username)")
     }
     
     func updatePassword(password: String) {

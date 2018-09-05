@@ -26,14 +26,15 @@ class LoginViewController: UIViewController {
         setupLoginButton()
         
         userViewModel.username.bind {
-            self.usernameTextField.text = $0
+            print("Username Changed: \($0)")
         }
     }
     
     func setupLoginButton() {
-        loginButton.layer.borderColor = UIColor.green.cgColor
+        let greenColor = UIColor(red: 22/255, green: 166/255, blue: 140/255, alpha: 1)
+        loginButton.layer.borderColor = greenColor.cgColor
         loginButton.layer.borderWidth = 1
-        loginButton.setTitleColor(UIColor.green, for: .normal)
+        loginButton.setTitleColor(greenColor, for: .normal)
     }
     
     override func didReceiveMemoryWarning() {
@@ -54,6 +55,7 @@ class LoginViewController: UIViewController {
                     print(error)
                 } else {
                     print("login success")
+                    self.performSegue(withIdentifier: "showHomeScreen", sender: self)
                 }
             })
         case .Invalid(let error):
@@ -87,6 +89,7 @@ extension LoginViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let newString = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        print(newString)
         if textField == usernameTextField {
             userViewModel.updateUsername(username: newString)
         } else if textField == passwordTextField {
